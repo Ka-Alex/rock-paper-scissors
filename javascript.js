@@ -1,5 +1,7 @@
 //VARIABLE: create an integer variable for computerChoice, initVal = 0
 let computerChoice = 0;
+//VARIABLE: create a string variablefor called humanChoice, initVal ""
+let humanChoice = "";
 
 //FUNCTION: Randomly chooses a number between 0 and 2            
 function getComputerChoice() {
@@ -7,13 +9,13 @@ function getComputerChoice() {
     computerChoice = Math.floor(Math.random()*3);
     switch (computerChoice){
         case 0: 
-            computerChoice = "Rock";
+            computerChoice = "rock";
             break;
         case 1: 
-            computerChoice = "Scissors";
+            computerChoice = "scissors";
             break;
         case 2: 
-            computerChoice = "Paper";
+            computerChoice = "paper";
             break;
         default : console.log("Invalid choice");
     }
@@ -21,6 +23,16 @@ function getComputerChoice() {
     return computerChoice;
 }
 
+//FUNCTION/INPUT: Ask user a text input and put the answer in humanChoice
+function getHumanChoice() {
+    humanChoice = prompt("Rock, Scissors or Paper ?").toLowerCase();
+    //CONDITION: if answer different than expected
+    if ((humanChoice === "rock") || (humanChoice === "scissors") || (humanChoice === "paper")) {
+        console.log("Your choice is valid")
+    } else console.log('Invalid choice');
+
+    return humanChoice;
+}
 //AFFECTATION: put this string value inside humanChoice
-computerChoice = getComputerChoice();
-console.log(computerChoice);
+humanChoice = getHumanChoice();
+console.log(humanChoice);
