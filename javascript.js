@@ -2,6 +2,9 @@
 let computerChoice = 0;
 //VARIABLE: create a string variablefor called humanChoice, initVal ""
 let humanChoice = "";
+//VARIABLE: create two variables to keep track of the player and computer score
+let humanScore = 0;
+let computerScore = 0;
 
 //FUNCTION: Randomly chooses a number between 0 and 2            
 function getComputerChoice() {
