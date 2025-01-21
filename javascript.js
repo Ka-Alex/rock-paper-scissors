@@ -1,3 +1,4 @@
+"use strict"
 //VARIABLE: create an integer variable for computerChoice, initVal = 0
 let computerChoice = 0;
 //VARIABLE: create a string variablefor called humanChoice, initVal ""
@@ -28,14 +29,42 @@ function getComputerChoice() {
 
 //FUNCTION/INPUT: Ask user a text input and put the answer in humanChoice
 function getHumanChoice() {
-    humanChoice = prompt("Rock, Scissors or Paper ?").toLowerCase();
+    humanChoice = prompt("Rock, Scissors or Paper ?");
+    if(humanChoice === null){
+        return;
+    } else {
+        humanChoice = humanChoice.toLowerCase()
+    }
+
     //CONDITION: if answer different than expected
     if ((humanChoice === "rock") || (humanChoice === "scissors") || (humanChoice === "paper")) {
-        console.log("Your choice is valid")
-    } else console.log('Invalid choice');
-
-    return humanChoice;
+        return humanChoice;
+    } else {
+        return;
+    }
 }
-//AFFECTATION: put this string value inside humanChoice
-humanChoice = getHumanChoice();
-console.log(humanChoice);
+
+
+//AFFECTATION: put the string value inside humanChoice and computerChoice
+const humanSelection = getHumanChoice();
+const computerSelection = getComputerChoice();
+
+
+function playRound(humanChoice, computerChoice) {
+
+    if (humanChoice > computerChoice) {
+        console.log(`You win! ${humanChoice} beats ${computerChoice}`);
+        humanScore = ++humanScore;
+    } else if (humanChoice < computerChoice) {
+        console.log(`You lose! ${humanChoice} lose to ${computerChoice}`);
+        computerScore = ++computerScore;
+    } else if (humanChoice === computerChoice) {
+        console.log(`It's a tie`);
+    }
+    }
+
+
+playRound(humanSelection, computerSelection);
+console.log(`Computer score : ${computerScore}`);
+console.log(`Human score : ${humanScore}`);
+
