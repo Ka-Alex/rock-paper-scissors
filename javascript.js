@@ -1,70 +1,111 @@
 "use strict"
-//VARIABLE: create an integer variable for computerChoice, initVal = 0
 let computerChoice = 0;
-//VARIABLE: create a string variablefor called humanChoice, initVal ""
 let humanChoice = "";
-//VARIABLE: create two variables to keep track of the player and computer score
 let humanScore = 0;
 let computerScore = 0;
 
-//FUNCTION: Randomly chooses a number between 0 and 2            
 function getComputerChoice() {
-    //returns 0, 1 or 2
-    computerChoice = Math.floor(Math.random()*3);
-    switch (computerChoice){
-        case 0: 
+    computerChoice = Math.floor(Math.random() * 3);
+    switch (computerChoice) {
+        case 0:
             computerChoice = "rock";
             break;
-        case 1: 
+        case 1:
             computerChoice = "scissors";
             break;
-        case 2: 
+        case 2:
             computerChoice = "paper";
             break;
-        default : console.log("Invalid choice");
+        default: console.log("Invalid choice");
     }
 
     return computerChoice;
 }
 
-//FUNCTION/INPUT: Ask user a text input and put the answer in humanChoice
 function getHumanChoice() {
     humanChoice = prompt("Rock, Scissors or Paper ?");
-    if(humanChoice === null){
+    // user cancel the prompt window
+    if (humanChoice === null) {
         return;
     } else {
         humanChoice = humanChoice.toLowerCase()
     }
 
-    //CONDITION: if answer different than expected
+    // allow only the three string values
     if ((humanChoice === "rock") || (humanChoice === "scissors") || (humanChoice === "paper")) {
         return humanChoice;
     } else {
+        console.assert("False");
         return;
     }
 }
 
-
-//AFFECTATION: put the string value inside humanChoice and computerChoice
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
-
-
-function playRound(humanChoice, computerChoice) {
-
-    if (humanChoice > computerChoice) {
-        console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-        humanScore = ++humanScore;
-    } else if (humanChoice < computerChoice) {
-        console.log(`You lose! ${humanChoice} lose to ${computerChoice}`);
-        computerScore = ++computerScore;
-    } else if (humanChoice === computerChoice) {
-        console.log(`It's a tie`);
+// score round by round and final score with finalRound parameter
+function countScore(humanScore, computerScore, finalRound) {
+    let winnerOrLoser = "";
+    if(humanScore > computerScore) {
+        winnerOrLoser = `You win the game ${`\u{1F973}`}!`
+    } else if(humanScore < computerScore) {
+        winnerOrLoser = `You lose the game ${`\u{1F62D}`}!`
+    } else {
+        winnerOrLoser = `It's a tie ${`\u{1F635}`}!`
     }
+    if(finalRound){
+        console.log(`%c Final results : ${winnerOrLoser}`,
+            `font-size: 20px; color: red`);
+            console.table({"You":`${humanScore} point(s)`, "Computer":`${computerScore} point(s)`})
     }
+}
 
+// a game is 5 rounds
+function playGame(round = 0) {
 
-playRound(humanSelection, computerSelection);
-console.log(`Computer score : ${computerScore}`);
-console.log(`Human score : ${humanScore}`);
+    console.log(`%c Start of the game`, `font-size: 20px; color: blue`);
+    
+    function playRound() {
+        ++round;
 
+        const humanSelection = getHumanChoice();
+        const computerSelection = getComputerChoice();
+
+            switch (humanSelection + computerSelection) {
+                case "rockscissors":
+                case "scissorspaper":
+                case "paperrock":
+                    console.log(`%c Round ${round}: `,`font-size: 15px`, `You win the round ${"\u{1F60E}"}! ${humanSelection} beats ${computerSelection}`);
+                    humanScore++; 
+                    break;
+                case "rockpaper":
+                case "paperscissors":
+                case "scissorsrock":  
+                    console.log(`%c Round ${round}: `,`font-size: 15px`,`You lose the round ${"\u{1F62D}"}! ${humanSelection} lose to ${computerSelection}`);
+                    computerScore++;
+                    break;
+                case "rockrock":
+                case "scissorsscissors":
+                case "paperpaper":        
+                    console.log(`%c Round ${round}: `,`font-size: 15px`, `It's a tie in this round ${"\u{1F632}"}! You both chose ${humanSelection}`);
+                    break;    
+            }
+           }
+
+    playRound();
+    countScore(humanScore, computerScore)
+
+    playRound();
+    countScore(humanScore, computerScore)
+
+    playRound();
+    countScore(humanScore, computerScore)
+
+    playRound();
+   countScore(humanScore, computerScore)
+
+    playRound();
+    countScore(humanScore, computerScore)
+}
+
+playGame();
+
+//Final score
+countScore(humanScore, computerScore, true);
