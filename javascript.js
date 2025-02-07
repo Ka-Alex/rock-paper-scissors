@@ -44,23 +44,44 @@ function playRound(event) {
                 case "rockscissors":
                 case "scissorspaper":
                 case "paperrock":
-                    console.log(`You win ${"\u{1F60E}"}! ${humanSelection} beats ${computerSelection}`);
+                    displayResults('win', humanSelection, computerSelection)
                     humanScore++; 
                     break;
                 case "rockpaper":
                 case "paperscissors":
-                case "scissorsrock":  
-                    console.log(`You lose ${"\u{1F62D}"}! ${humanSelection} lose to ${computerSelection}`);
+                case "scissorsrock": 
+                    displayResults('lose', humanSelection, computerSelection) 
                     computerScore++;
                     break;
                 case "rockrock":
                 case "scissorsscissors":
-                case "paperpaper":        
-                    console.log(`It's a tie ${"\u{1F632}"}! You both chose ${humanSelection}`);
+                case "paperpaper":
+                    displayResults('tie', humanSelection, computerSelection)        
                     break;    
             }
            //++round;
            }
+        
+    function displayResults(result, humanSelection, computerSelection) {
+        const div = document.createElement('div');
+        document.body.appendChild(div);
+        let resultMessage ='';
+
+        switch(result) {
+            case 'win':
+                resultMessage = document.createTextNode(`You win ${"\u{1F60E}"}! ${humanSelection} beats ${computerSelection}`);
+                break;
+            case 'lose':
+                resultMessage = document.createTextNode(`You lose ${"\u{1F62D}"}! ${humanSelection} lose to ${computerSelection}`);
+                break;
+            case 'tie':
+                resultMessage = document.createTextNode(`It's a tie ${"\u{1F632}"}! You both chose ${humanSelection}`);
+                break;
+
+        }
+        div.appendChild(resultMessage);
+
+    }
 
 
 
@@ -103,4 +124,6 @@ function playGame() {
     btnRock.addEventListener('click', playRound);
     btnPaper.addEventListener('click', playRound);
     btnScissors.addEventListener('click', playRound);
+
+    
     
